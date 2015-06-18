@@ -1,0 +1,34 @@
+.ball {
+  width: 26px;
+  height: 26px;
+}
+.selected {
+  width: 30px;
+  height: 30px;
+}
+h1 {
+  text-align: center;
+}
+table {
+  empty-cells: show;
+}
+td {
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px outset lightgray;
+  background-color: lightgray;
+}
+#content {
+  text-align: center;
+}
+#next {
+  float: left;
+}
+#score {
+  text-align: right;
+}
+.break {
+  clear: left;
+}
