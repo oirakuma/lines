@@ -4,6 +4,7 @@
   global.initialize = initialize;
 
   var SIZE = 9;
+  var GAMEOVER = -1;
   var ballImages= [
     "gem01.svg",
     "gem02.svg",
@@ -14,6 +15,7 @@
     "gem07.svg",
   ];
   var selectedBall = null;
+  var status = 0;
 
   function shuffle(a) {
     return a.sort(function(){
@@ -31,7 +33,8 @@
   }
 
   function copyNext() {
-    for (var i = 0; i < 3; i++) {
+    var count = Math.min(3, $("#content td:empty").length);
+    for (var i = 0; i < count; i++) {
       var img = $("#next img")[0];
       $(shuffle($("#content td:empty"))[0]).append($(img).effect("pulsate"));
     }
@@ -137,13 +140,17 @@
 
           cache = {};
           if (!canMove(x1, y1, x2, y2, 0)) return;
-          $(this).append($(selectedBall).find("img"));
           $(selectedBall).find("img").removeClass("selected");
+          $(this).append($(selectedBall).find("img"));
           selectedBall = null;
           setTimeout(function(){
             var erased = checkLine();
             if (!erased) {
               copyNext();
+              if ($("#content td:empty").length == 0) {
+                status = GAMEOVER;
+                $("#content").append($('<div>Game Over</div>').effect("bounce"));
+              }
               createNext();
             }
           }, 100);

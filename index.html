@@ -6,10 +6,22 @@
 <meta charset="UTF-8">
 </head>
 <body>
-  <div id="next"></div>
-  <div id="score"></div>
-  <div class="break"></div>
-  <div id="content"></div>
+  <div data-role="page" id="top">
+    <h1>Lines</h1>
+    <a href="#one" class="ui-btn">Game Start</a>
+    <a href="#ranking" class="ui-btn">Ranking</a>
+  </div>
+
+  <div data-role="page" id="one">
+    <div id="next"></div>
+    <div id="score"></div>
+    <div class="break"></div>
+    <div id="content"></div>
+  </div>
+
+  <div data-role="page" id="ranking">
+    <a href="#top" class="ui-btn">Back</a>
+  </div>
 </div>
 
 <script src="vendor/jquery.min.js"></script>
