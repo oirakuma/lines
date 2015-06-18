@@ -1,7 +1,6 @@
 //UI
 (function(global){
   global.render = render;
-  global.initialize = initialize;
 
   var SIZE = 9;
   var GAMEOVER = -1;
@@ -21,9 +20,6 @@
     return a.sort(function(){
       return Math.random()-0.5;
     });
-  }
-
-  function initialize() {
   }
 
   function createBall() {
