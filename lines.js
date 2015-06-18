@@ -22,12 +22,6 @@
     });
   }
 
-  function createBall() {
-    var x = ballImages[Math.floor(Math.random()*ballImages.length)];
-    var img = $('<img class="ball" src="images/'+x+'">');
-    return img;
-  }
-
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
     for (var i = 0; i < count; i++) {
@@ -43,9 +37,15 @@
       tr.append($('<td></td>').append(createBall()));
     table.append(tr);
     $("#next").html(table);
+
+    function createBall() {
+      var x = ballImages[Math.floor(Math.random()*ballImages.length)];
+      var img = $('<img>').addClass("ball").attr("src", "images/"+x);
+      return img;
+    }
   }
 
-  function checkLine() {
+  function checkLines() {
     var tds = $("#content td");
 
     function isLined(x, y, vx, vy) {
@@ -140,7 +140,7 @@
           $(this).append($(selectedBall).find("img"));
           selectedBall = null;
           setTimeout(function(){
-            var erased = checkLine();
+            var erased = checkLines();
             if (!erased) {
               copyNext();
               if ($("#content td:empty").length == 0) {
