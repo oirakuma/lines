@@ -14,6 +14,7 @@
     "gem07.svg",
   ];
   var selectedBall = null;
+  var cache = null;
   var status = 0;
 
   function shuffle(a) {
@@ -52,55 +53,50 @@
       var img = $(tds[x*SIZE+y]).find("img");
       if (img.length == 0) return false;
       var src1 = img.attr("src")
-      for (var k = 1; k < 5; k++) {
+      var k = 1;
+      while (true) {
         var x2 = x+k*vx;
         var y2 = y+k*vy;
-        if (x2 < 0 || x2 >= SIZE || y2 < 0 || y2 >= SIZE) return false;
+        if (x2 < 0 || x2 >= SIZE || y2 < 0 || y2 >= SIZE) break;
         img = $(tds[x2*SIZE+y2]).find("img");
-        if (img.length == 0) return false;
+        if (img.length == 0) break;
         var src2 = img.attr("src");
-        if (src1 != src2)
-          return false;
+        if (src1 != src2) break;
+        k++;
       }
-      return true;
+      return k;
     }
 
-    function eraseLine(x, y, vx, vy) {
-      for (var k = 0; k < 5; k++) {
+    function eraseLine(x, y, vx, vy, n) {
+      for (var k = 0; k < n; k++) {
+        if (cache[(x+k*vx)*SIZE+(y+k*vy)]) return;
+        cache[(x+k*vx)*SIZE+(y+k*vy)] = true;
         var img = $(tds[(x+k*vx)*SIZE+(y+k*vy)]).find("img");
-        $(img).effect("explode", null, "slow", function(){
+        img.effect("explode", null, "slow", function(){
           $(this).remove();
         });
       }
       var score = parseInt($("#score").text());
-      $("#score").text(score+25);
+      $("#score").text(score+(n*n));
     }
 
+    cache = {};
     var erased = false;
+    var n;
     for (var i = 0; i < SIZE; i++) {
       for (var j = 0; j < SIZE; j++) {
-        if (isLined(i, j,  1,  0)) {
-          erased = true;
-          eraseLine(i, j,  1,  0);
-        }
-        if (isLined(i, j,  0,  1)) {
-          erased = true;
-          eraseLine(i, j,  0,  1);
-        }
-        if (isLined(i, j,  1,  1)) {
-          erased = true;
-          eraseLine(i, j,  1,  1);
-        }
-        if (isLined(i, j,  1, -1)) {
-          erased = true;
-          eraseLine(i, j,  1, -1);
+        var vx = [1, 0, 1,  1];
+        var vy = [0, 1, 1, -1];
+        for (var k = 0; k < vx.length; k++) {
+          if ((n = isLined(i, j,  vx[k], vy[k])) >= 5) {
+            erased = true;
+            eraseLine(i, j,  vx[k], vy[k], n);
+          }
         }
       }
     }
     return erased;
   }
-
-  var cache = null;
 
   function canMove(x1, y1, x2, y2, level) {
     if (x1 < 0 || x1 >= SIZE || y1 < 0 || y1 >= SIZE) return false;
@@ -143,9 +139,10 @@
             var erased = checkLines();
             if (!erased) {
               copyNext();
+              checkLines();
               if ($("#content td:empty").length == 0) {
                 status = GAMEOVER;
-                $("#content").append($('<div>Game Over</div>').effect("bounce"));
+                $("#content").append($('<div>GameOver</div>').effect("bounce"));
               }
               createNext();
             }
@@ -178,6 +175,5 @@
 })(this.self);
 
 $(document).ready(function(){
-  initialize();
   render();
 });
