@@ -8,6 +8,7 @@
 <body>
   <div data-role="page" id="top">
     <h1>Lines</h1>
+    <div id="animation" align="center"></div>
     <a href="#one" class="ui-btn">Game Start</a>
     <a href="#ranking" class="ui-btn">Ranking</a>
   </div>
@@ -28,5 +29,18 @@
 <script src="vendor/jquery.mobile-1.4.5.min.js"></script>
 <script src="vendor/jquery-ui.min.js"></script>
 <script src="lines.js"></script>
+<script>
+function gemAnimation(id) {
+  if (id > 7) return;
+  var img = $('<img src="images/gem0'+id+'.svg">').css("width", 40);
+  $("#animation").prepend(img);
+  img.effect("bounce", "slow", function(){
+    gemAnimation(id+1);
+  });
+//  setTimeout(function(){
+//  }, 500);
+}
+gemAnimation(1);
+</script>
 </body>
 </html>
