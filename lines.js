@@ -142,7 +142,7 @@
               checkLines();
               if ($("#content td:empty").length == 0) {
                 status = GAMEOVER;
-                $("#content").append($('<div>GameOver</div>').effect("bounce"));
+                $("#content").append($('<h3>GameOver</h3>'));
               }
               createNext();
             }
@@ -165,7 +165,8 @@
         tr.append(createTd(i, j));
       table.append(tr);
     }
-    $("#content").html(table);
+    var center = $("<center></center>");
+    $("#content").html(center.append(table));
     createNext();
     copyNext();
     createNext();
