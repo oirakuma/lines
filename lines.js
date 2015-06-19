@@ -17,17 +17,12 @@
   var cache = null;
   var status = 0;
 
-  function shuffle(a) {
-    return a.sort(function(){
-      return Math.random()-0.5;
-    });
-  }
-
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
     for (var i = 0; i < count; i++) {
       var img = $("#next img")[0];
-      $(shuffle($("#content td:empty"))[0]).append($(img).effect("pulsate"));
+      var tds = $("#content td:empty");
+      $(tds[Math.floor(Math.random()*tds.length)]).append($(img).effect("pulsate"));
     }
   }
 
