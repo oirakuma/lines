@@ -5,10 +5,10 @@
 h1, h2, h3 {
   text-align: center;
 }
-table {
+#one table {
   empty-cells: show;
 }
-td {
+#one td {
   text-align: center;
   vertical-align: middle;
   border: 1px outset lightgray;

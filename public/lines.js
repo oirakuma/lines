@@ -139,7 +139,12 @@
               if ($("#content td:empty").length == 0) {
                 status = GAMEOVER;
                 $("#content").append($('<h3>GameOver</h3>'));
-                var button = $('<a>リプレイ</a>');
+                $.ajax({
+                  url: "/entry",
+                  type: "POST",
+                  data: "score="+$("#score").text()
+                });
+                var button = $('<a>リトライ</a>');
                 button.addClass("ui-btn");
                 button.click(function(){
                   initialize();

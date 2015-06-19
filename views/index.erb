@@ -8,9 +8,17 @@
 <body>
   <div data-role="page" id="top">
     <h1>Lines</h1>
+    <% if session[:username] %>
+    ようこそ <%= session[:username] %> さん
+    <% end %>
     <div id="animation" align="center"></div>
     <a href="#one" class="ui-btn">ゲーム開始</a>
     <a href="#ranking" class="ui-btn">ランキング</a>
+    <% if session[:username] %>
+    <a href="logout" class="ui-btn">ログアウト</a>
+    <% else %>
+    <a href="#login" class="ui-btn">ログイン</a>
+    <% end %>
   </div>
 
   <div data-role="page" id="one">
@@ -21,7 +29,22 @@
   </div>
 
   <div data-role="page" id="ranking">
-    Coming soon...
+    <ol data-role="listview">
+    <% @scores.each do |k,v| %>
+      <li><%= k %><span class="ui-li-count"><%= v %></span></li>
+    <% end %>
+    </ol>
+    <a href="#top" class="ui-btn">戻る</a>
+  </div>
+
+  <div data-role="page" id="login">
+    <form action="/login" method="POST">
+    <table>
+    <tr><td>ユーザ名</td><td><input type="text" name="username"></td></tr>
+    <tr><td>パスワード</td><td><input type="password" name="password"></td></tr>
+    </table>
+    <input type="submit" value="ログイン" class="ui-btn">
+    </form>
     <a href="#top" class="ui-btn">戻る</a>
   </div>
 </div>
@@ -40,7 +63,9 @@ function gemAnimation(id) {
     gemAnimation(id+1);
   });
 }
-gemAnimation(1);
+$(document).ready(function(){
+  gemAnimation(1);
+});
 </script>
 </body>
 </html>
