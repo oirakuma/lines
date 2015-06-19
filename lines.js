@@ -127,7 +127,7 @@
 
           cache = {};
           if (!canMove(x1, y1, x2, y2, 0)) return;
-          $(selectedBall).find("img").removeClass("selected");
+          $(selectedBall).find("img").trigger("stopRumble");
           $(this).append($(selectedBall).find("img"));
           selectedBall = null;
           setTimeout(function(){
@@ -144,8 +144,10 @@
           }, 100);
         }
       } else {
-        $(selectedBall).find("img").removeClass("selected");
-        img.toggleClass("selected");
+        $(selectedBall).find("img").trigger("stopRumble");
+        img.jrumble({
+          speed: 50
+        }).trigger("startRumble");
         selectedBall = this;
       }
     });
