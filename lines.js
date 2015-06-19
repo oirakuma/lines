@@ -1,6 +1,7 @@
 //UI
 (function(global){
   global.render = render;
+  global.initialize = initialize;
 
   var SIZE = 9;
   var GAMEOVER = -1;
@@ -138,6 +139,14 @@
               if ($("#content td:empty").length == 0) {
                 status = GAMEOVER;
                 $("#content").append($('<h3>GameOver</h3>'));
+                var button = $('<a>リプレイ</a>');
+                button.addClass("ui-btn");
+                button.click(function(){
+                  initialize();
+                  $(this).remove();
+                  $("h3").remove();
+                });
+                $("#content").append(button);
               }
               createNext();
             }
@@ -167,11 +176,15 @@
     }
     var center = $("<center></center>");
     $("#content").html(center.append(table));
+    initialize();
+  }
+
+  function initialize() {
+    $("img").remove();
+    $("#score").html("0");
     createNext();
     copyNext();
     createNext();
-
-    $("#score").html("0");
   }
 })(this.self);
 
