@@ -154,6 +154,9 @@
         selectedBall = this;
       }
     });
+    var width = Math.min($(window).width(), $(window).height());
+    td.css("width", Math.floor(width/9)-5);
+    td.css("height", Math.floor(width/9)-5);
     return td;
   }
 
