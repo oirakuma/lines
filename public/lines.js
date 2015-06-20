@@ -37,7 +37,7 @@
 
     function createBall() {
       var x = ballImages[Math.floor(Math.random()*ballImages.length)];
-      var img = $('<img>').addClass("ball").attr("src", "images/"+x);
+      var img = $('<img>').addClass("ball").attr("src", baseURI+"/images/"+x);
       return img;
     }
   }
