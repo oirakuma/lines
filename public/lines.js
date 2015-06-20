@@ -125,7 +125,7 @@
       "score="+$("#score").text()
     ].join("&");
     $.ajax({
-      url: "/entry",
+      url: baseURI+"/entry",
       type: "POST",
       data: data
     });
