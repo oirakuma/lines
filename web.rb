@@ -12,7 +12,23 @@ get '/' do
 end
 
 post '/login' do
-  session[:username] = params[:username]
+  # ユーザ登録されているか調べる。
+  registerd = false
+  File.open("users.csv").each_line{|line|
+    k, v = line.split(/\s+/)
+    if k == params[:username]
+      if params[:password] == v
+        session[:username] = params[:username]
+      end
+      registerd = true
+    end
+  }
+  unless registerd
+    File.open("users.csv","a"){|f|
+      f.puts "#{params[:username]}\t#{params[:password]}"
+    }
+    session[:username] = params[:username]
+  end
   redirect '/'
 end
 
