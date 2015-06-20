@@ -11,36 +11,8 @@ get '/' do
   erb :index
 end
 
-post '/login' do
-  # ユーザ登録されているか調べる。
-  registerd = false
-  File.open("users.csv").each_line{|line|
-    k, v = line.split(/\s+/)
-    if k == params[:username]
-      if params[:password] == v
-        session[:username] = params[:username]
-      end
-      registerd = true
-    end
-  }
-  unless registerd
-    File.open("users.csv","a"){|f|
-      f.puts "#{params[:username]}\t#{params[:password]}"
-    }
-    session[:username] = params[:username]
-  end
-  redirect '/'
-end
-
-get '/logout' do
-  session[:username] = nil
-  redirect '/'
-end
-
 post '/entry' do
-  if session[:username]
-    File.open("scores.csv","a"){|f|
-      f.puts "#{session[:username]}\t#{params[:score]}"
-    }
-  end
+  File.open("scores.csv","a"){|f|
+    f.puts "#{params[:name]}\t#{params[:score]}"
+  }
 end

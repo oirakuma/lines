@@ -116,6 +116,32 @@
     return false;
   }
 
+  function entryScore() {
+    var name = prompt("名前を入力してね。");
+    if (!name) return;
+
+    var data = [
+      "name="+name,
+      "score="+$("#score").text()
+    ].join("&");
+    $.ajax({
+      url: "/entry",
+      type: "POST",
+      data: data
+    });
+  }
+
+  function showRetryButton() {
+    var button = $('<a>リトライ</a>');
+    button.addClass("ui-btn");
+    button.click(function(){
+      initialize();
+      $(this).remove();
+      $("h3").remove();
+    });
+    $("#content").append(button);
+  }
+
   function createTd(x, y) {
     var td = $('<td></td>').addClass("x"+x+"-"+y).click(function(){
       var img = $(this).find("img");
@@ -131,31 +157,18 @@
           $(selectedBall).find("img").trigger("stopRumble");
           $(this).append($(selectedBall).find("img"));
           selectedBall = null;
-          setTimeout(function(){
-            var erased = checkLines();
-            if (!erased) {
-              copyNext();
-              checkLines();
-              if ($("#content td:empty").length == 0) {
-                status = GAMEOVER;
-                $("#content").append($('<h3>GameOver</h3>'));
-                $.ajax({
-                  url: "/entry",
-                  type: "POST",
-                  data: "score="+$("#score").text()
-                });
-                var button = $('<a>リトライ</a>');
-                button.addClass("ui-btn");
-                button.click(function(){
-                  initialize();
-                  $(this).remove();
-                  $("h3").remove();
-                });
-                $("#content").append(button);
-              }
-              createNext();
+          var erased = checkLines();
+          if (!erased) {
+            copyNext();
+            checkLines();
+            if ($("#content td:empty").length == 0) {
+              status = GAMEOVER;
+              $("#content").append($('<h3>GameOver</h3>'));
+              showRetryButton();
+              setTimeout(entryScore, 500);
             }
-          }, 100);
+            createNext();
+          }
         }
       } else {
         $(selectedBall).find("img").trigger("stopRumble");

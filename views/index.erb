@@ -8,9 +8,6 @@
 <body>
   <div data-role="page" id="top">
     <h1>Lines</h1>
-    <% if session[:username] %>
-    ようこそ <%= session[:username] %> さん
-    <% end %>
     <center>
     <% (1..7).each do |x| %>
     <img src="images/gem0<%= x %>.svg" width="40">
@@ -18,11 +15,6 @@
     </center>
     <a href="#one" class="ui-btn">ゲーム開始</a>
     <a href="#ranking" class="ui-btn">ランキング</a>
-    <% if session[:username] %>
-    <a href="logout" class="ui-btn">ログアウト</a>
-    <% else %>
-    <a href="#login" class="ui-btn">ログイン</a>
-    <% end %>
   </div>
 
   <div data-role="page" id="one">
@@ -39,17 +31,6 @@
       <li><%= k %><span class="ui-li-count"><%= v %></span></li>
     <% end %>
     </ol>
-    <a href="#top" class="ui-btn">戻る</a>
-  </div>
-
-  <div data-role="page" id="login">
-    <form action="/login" method="POST">
-    <table>
-    <tr><td>ユーザ名</td><td><input type="text" name="username"></td></tr>
-    <tr><td>パスワード</td><td><input type="password" name="password"></td></tr>
-    </table>
-    <input type="submit" value="ログイン" class="ui-btn">
-    </form>
     <a href="#top" class="ui-btn">戻る</a>
   </div>
 </div>
