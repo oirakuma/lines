@@ -11,7 +11,11 @@
     <% if session[:username] %>
     ようこそ <%= session[:username] %> さん
     <% end %>
-    <div id="animation" align="center"></div>
+    <center>
+    <% (1..7).each do |x| %>
+    <img src="images/gem0<%= x %>.svg" width="40">
+    <% end %>
+    </center>
     <a href="#one" class="ui-btn">ゲーム開始</a>
     <a href="#ranking" class="ui-btn">ランキング</a>
     <% if session[:username] %>
@@ -54,18 +58,5 @@
 <script src="vendor/jquery-ui.min.js"></script>
 <script src="vendor/jquery.jrumble.1.3.min.js"></script>
 <script src="lines.js"></script>
-<script>
-function gemAnimation(id) {
-  if (id > 7) return;
-  var img = $('<img src="images/gem0'+id+'.svg">').css("width", 40);
-  $("#animation").prepend(img);
-  img.effect("bounce", "slow", function(){
-    gemAnimation(id+1);
-  });
-}
-$(document).ready(function(){
-  gemAnimation(1);
-});
-</script>
 </body>
 </html>
