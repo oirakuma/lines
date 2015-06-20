@@ -33,6 +33,7 @@
   </div>
 
   <div data-role="page" id="ranking">
+    <h2>ランキング</h2>
     <ol data-role="listview">
     <% @scores.each do |k,v| %>
       <li><%= k %><span class="ui-li-count"><%= v %></span></li>
