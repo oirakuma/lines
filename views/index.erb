@@ -14,6 +14,7 @@
     <% end %>
     </center>
     <a href="#one" class="ui-btn">ゲーム開始</a>
+    <a href="#rule" class="ui-btn">ゲームルール</a>
     <a href="#ranking" class="ui-btn">ランキング</a>
   </div>
 
@@ -25,6 +26,17 @@
     <a href="<%= ENV["RACK_BASE_URI"] %>/" class="ui-btn">戻る</a>
   </div>
 
+  <div data-role="page" id="rule">
+    <ol>
+      <li>宝石を移動してたて・よこ・ななめに5個以上並べて消す。
+      <li>5個だと25点、6個だと36点、7個だと49点。
+      <li>宝石で道がふさがっているとその先には移動できない。
+      <li>移動する度に3個の宝石がランダムに追加される。
+      <li>全部埋まるとゲーム終了。
+    </ol>
+    <a href="<%= ENV["RACK_BASE_URI"] %>/" class="ui-btn">OK</a>
+  </div>
+
   <div data-role="page" id="ranking">
     <h2>ランキング</h2>
     <ol data-role="listview">
@@ -32,7 +44,7 @@
       <li><%= k %><span class="ui-li-count"><%= v %></span></li>
     <% end %>
     </ol>
-    <a href="<%= ENV["RACK_BASE_URI"] %>/" class="ui-btn">戻る</a>
+    <a href="<%= ENV["RACK_BASE_URI"] %>/" class="ui-btn">OK</a>
   </div>
 </div>
 
