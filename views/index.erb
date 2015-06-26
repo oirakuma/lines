@@ -1,21 +1,22 @@
 <html>
 <head>
 <link rel="stylesheet" href="<%= ENV["RACK_BASE_URI"] %>/vendor/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="<%= ENV["RACK_BASE_URI"] %>/vendor/animate.css">
 <link rel="stylesheet" href="<%= ENV["RACK_BASE_URI"] %>/lines.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
 </head>
 <body>
   <div data-role="page" id="top">
-    <h1>Lines</h1>
+    <h1 class="animated bounce">Lines</h1>
     <center>
     <% (1..7).each do |x| %>
     <img src="<%= ENV["RACK_BASE_URI"] %>/images/gem0<%= x %>.svg" width="40">
     <% end %>
     </center>
-    <a href="#one" class="ui-btn">ゲーム開始</a>
-    <a href="#rule" class="ui-btn">ゲームルール</a>
-    <a href="#ranking" class="ui-btn">ランキング</a>
+    <a href="#one" data-role="button">ゲーム開始</a>
+    <a href="#rule" data-role="button">ゲームルール</a>
+    <a href="#ranking" data-role="button">ランキング</a>
   </div>
 
   <div data-role="page" id="one">
