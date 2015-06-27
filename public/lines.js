@@ -68,7 +68,7 @@
         if (cache[(x+k*vx)*SIZE+(y+k*vy)]) return;
         cache[(x+k*vx)*SIZE+(y+k*vy)] = true;
         var img = $(tds[(x+k*vx)*SIZE+(y+k*vy)]).find("img");
-        img.effect("explode", null, "slow", function(){
+        img.effect("puff", null, function(){
           $(this).remove();
         });
       }
