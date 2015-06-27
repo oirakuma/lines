@@ -198,7 +198,7 @@
   }
 
   function initialize() {
-    $("img").remove();
+    $("#content img").remove();
     $("#score").html("0");
     createNext();
     copyNext();
