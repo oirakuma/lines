@@ -9,6 +9,9 @@ h1 {
 h1, h2, h3 {
   text-align: center;
 }
+#score {
+  font-size: 28px;
+}
 #one table {
   empty-cells: show;
 }

@@ -73,7 +73,13 @@
         });
       }
       var score = parseInt($("#score").text());
-      $("#score").text(score+(n*n));
+      var count = 0;
+      var timerId = setInterval(function(){
+        count++;
+        $("#score").text(score+count);
+        if (count == n*n)
+          clearTimeout(timerId);
+      }, 50);
     }
 
     cache = {};
