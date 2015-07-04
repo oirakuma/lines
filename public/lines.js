@@ -2,6 +2,7 @@
 (function(global){
   global.render = render;
   global.initialize = initialize;
+  global.setLevel = setLevel;
 
   var SIZE = 9;
   var GAMEOVER = -1;
@@ -22,6 +23,7 @@
   var cache = null;
   var status = 0;
   var penguinImage = null;
+  var level = 0;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -224,8 +226,16 @@
     copyNext();
     createNext();
   }
+
+  function setLevel(_level) {
+    level = _level;
+  }
 })(this.self);
 
 $(document).ready(function(){
+  $("input[type=radio]").click(function(){
+    var level = parseInt($(this).val());
+    setLevel(level);
+  });
   render();
 });

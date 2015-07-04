@@ -13,9 +13,16 @@
     <% (1..7).each do |x| %>
     <img src="<%= ENV["RACK_BASE_URI"] %>/images/gem0<%= x %>.svg" width="40">
     <% end %>
+    <form>
+      <fieldset data-role="controlgroup" data-type="horizontal">
+        <label><input id="level0" value=0 name="level" type="radio" checked="checked">Level 0</label>
+        <label><input id="level1" value=1 name="level" type="radio">Level 1</label>
+        <label><input id="level2" value=2 name="level" type="radio">Level 2</label>
+      </fieldset>
+    </form>
     </center>
-    <a href="#one" data-role="button">ゲーム開始</a>
-    <a href="#rule" data-role="button">ゲームルール</a>
+    <a href="#one" data-role="button">スタート</a>
+    <a href="#rule" data-role="button">ルール</a>
     <a href="#ranking" data-role="button">ランキング</a>
   </div>
 
