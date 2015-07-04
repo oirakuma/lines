@@ -15,13 +15,19 @@ h1, h2, h3 {
   right: 5px;
   position: absolute;
 }
+#content table {
+  empty-cells: show;
+  background-color: #36393D;
+  padding: 5px;
+}
 #one table {
   empty-cells: show;
+  background-color: #36393D;
 }
+
 #one td {
   text-align: center;
   vertical-align: middle;
-  border: 1px outset lightgray;
   background-color: lightgray;
 }
 #content {
@@ -29,9 +35,6 @@ h1, h2, h3 {
 }
 #next {
   float: left;
-}
-#score {
-  text-align: right;
 }
 .break {
   clear: left;

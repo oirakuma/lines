@@ -33,7 +33,7 @@
   }
 
   function createNext() {
-    var table = $("<table></table>");
+    var table = $("<table></table>").attr("cellspacing",1);
     var tr = $("<tr></tr>");
     for (var i = 0; i < 3; i++)
       tr.append($('<td></td>').append(createBall()));
@@ -195,8 +195,8 @@
       }
     });
     var width = Math.min($(window).width(), $(window).height());
-    td.css("width", Math.floor(width/9)-5);
-    td.css("height", Math.floor(width/9)-5);
+    td.css("width", Math.floor((width-20)/SIZE)-4);
+    td.css("height", Math.floor((width-20)/SIZE)-4);
     return td;
   }
 
