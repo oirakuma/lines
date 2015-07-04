@@ -123,7 +123,7 @@
   }
 
   function entryScore() {
-    var name = prompt("名前を入力してね。");
+    var name = prompt("名前を入力するとランキングに参加できます。");
     if (!name) return;
 
     var data = [
