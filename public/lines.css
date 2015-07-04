@@ -11,6 +11,9 @@ h1, h2, h3 {
 }
 #score {
   font-size: 28px;
+  top: 5px;
+  right: 5px;
+  position: absolute;
 }
 #one table {
   empty-cells: show;

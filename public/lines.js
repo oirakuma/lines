@@ -14,9 +14,14 @@
     "gem06.svg",
     "gem07.svg",
   ];
+  var penguinImages = [
+    "Rockhopper01",
+    "Emperor01",
+  ];
   var selectedBall = null;
   var cache = null;
   var status = 0;
+  var penguinImage = null;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -74,11 +79,16 @@
       }
       var score = parseInt($("#score").text());
       var count = 0;
+      setTimeout(function(){
+        $("#penguin img").attr("src", "images/"+penguinImage+"_L-Leg.png");
+      }, 0);
       var timerId = setInterval(function(){
         count++;
         $("#score").text(score+count);
-        if (count == n*n)
+        if (count == n*n) {
+          $("#penguin img").attr("src", "images/"+penguinImage+"_Center.png");
           clearTimeout(timerId);
+        }
       }, 50);
     }
 
@@ -204,6 +214,10 @@
   }
 
   function initialize() {
+    penguinImage = penguinImages[Math.floor(Math.random()*penguinImages.length)];
+    var img = $('<img src="images/'+penguinImage+'_Center.png">');
+    img.css("margin", "5px").css("height", "64px");
+    $("#penguin").append(img);
     $("#content img").remove();
     $("#score").html("0");
     createNext();
