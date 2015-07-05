@@ -35,6 +35,7 @@ h1, h2, h3 {
 }
 #next {
   float: left;
+  margin: 5px;
 }
 .break {
   clear: left;

@@ -23,7 +23,6 @@
   var cache = null;
   var status = 0;
   var penguinImage = null;
-  var level = 0;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -188,7 +187,7 @@
             createNext();
           }
         }
-      } else {
+      } else if (img.attr("src") != "images/rock.jpg") {
         $(selectedBall).find("img").trigger("stopRumble");
         img.jrumble({
           speed: 50
@@ -197,8 +196,8 @@
       }
     });
     var width = Math.min($(window).width(), $(window).height());
-    td.css("width", Math.floor((width-20)/SIZE)-4);
-    td.css("height", Math.floor((width-20)/SIZE)-4);
+    td.css("width", Math.floor((width-20)/SIZE)-2);
+    td.css("height", Math.floor((width-20)/SIZE)-2);
     return td;
   }
 
@@ -212,14 +211,7 @@
     }
     var center = $("<center></center>");
     $("#content").html(center.append(table));
-    initialize();
-  }
 
-  function initialize() {
-    penguinImage = penguinImages[Math.floor(Math.random()*penguinImages.length)];
-    var img = $('<img src="images/'+penguinImage+'_Center.png">');
-    img.css("margin", "5px").css("height", "64px");
-    $("#penguin").append(img);
     $("#content img").remove();
     $("#score").html("0");
     createNext();
@@ -227,8 +219,18 @@
     createNext();
   }
 
-  function setLevel(_level) {
-    level = _level;
+  function initialize() {
+    penguinImage = penguinImages[Math.floor(Math.random()*penguinImages.length)];
+    var img = $('<img src="images/'+penguinImage+'_Center.png">');
+    img.css("margin", "5px").css("height", "64px");
+    $("#penguin").append(img);
+  }
+
+  function setLevel(level) {
+    render();
+    var tds = $("#content td:empty").sort(function(){return Math.random()-0.5});
+    for (var i = 0; i < level; i++)
+      $(tds[i]).append('<img src="images/rock.jpg" style="width:100%; height:100%">');
   }
 })(this.self);
 
@@ -237,5 +239,6 @@ $(document).ready(function(){
     var level = parseInt($(this).val());
     setLevel(level);
   });
+  initialize();
   render();
 });
