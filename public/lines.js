@@ -80,13 +80,13 @@
       var score = parseInt($("#score").text());
       var count = 0;
       setTimeout(function(){
-        $("#penguin img").attr("src", baseURI+"/images/"+penguinImage+"_L-Leg.png");
+        $("#penguin img").attr("src", url_for(penguinImage+"_L-Leg.png"));
       }, 0);
       var timerId = setInterval(function(){
         count++;
         $("#score").text(score+count);
         if (count == n*n) {
-          $("#penguin img").attr("src", baseURI+"/images/"+penguinImage+"_Center.png");
+          $("#penguin img").attr("src", url_for(penguinImage+"_Center.png"));
           clearTimeout(timerId);
         }
       }, 50);
@@ -226,8 +226,12 @@
   }
 })(this.self);
 
+function url_for(name) {
+  return baseURI+"/images/"+name;
+}
+
 function image_tag(name) {
-  return $('<img>').attr("src", baseURI+"/images/"+name);
+  return $('<img>').attr("src", url_for(name));
 }
 
 $(document).ready(function(){
