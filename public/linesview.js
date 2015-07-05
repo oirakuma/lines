@@ -22,6 +22,7 @@
   var cache = null;
   var status = 0;
   var penguinImage = null;
+  var width = null;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -43,6 +44,7 @@
     function createBall() {
       var x = ballImages[Math.floor(Math.random()*ballImages.length)];
       var img = image_tag(x).addClass("ball");
+      img.css("width", width-2).css("height", width-2);
       return img;
     }
   }
@@ -194,17 +196,19 @@
         selectedBall = this;
       }
     });
-    var width = Math.min($(window).width(), $(window).height());
-    td.css("width", Math.floor((width-20)/SIZE)-2);
-    td.css("height", Math.floor((width-20)/SIZE)-2);
+    td.css("width", width).css("height", width);
     return td;
   }
 
   function render() {
+    var windowWidth = Math.min($(window).width(), $(window).height());
+    width = Math.floor((windowWidth-20)/SIZE)-2;
+
     $("#contents").empty();
     $("#contents").append('<div id="next"></div>');
     $("#contents").append('<div id="penguin"></div>');
     $("#contents").append('<div id="score"></div>');
+    $("#contents").append('<div style="clear:left"></div>');
     $("#contents").append('<div id="content"></div>');
     var table = $("<table></table>").attr("cellspacing",1);
     for (var i = 0; i < SIZE; i++) {
