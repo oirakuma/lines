@@ -195,8 +195,8 @@
       }
     });
     var width = Math.min($(window).width(), $(window).height());
-    td.css("width", Math.floor((width-20)/SIZE)-4);
-    td.css("height", Math.floor((width-20)/SIZE)-4);
+    td.css("width", Math.floor((width-20)/SIZE)-2);
+    td.css("height", Math.floor((width-20)/SIZE)-2);
     return td;
   }
 
