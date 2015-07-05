@@ -2,6 +2,7 @@
 (function(global){
   global.render = render;
   global.initialize = initialize;
+  global.setLevel = setLevel;
 
   var SIZE = 9;
   var GAMEOVER = -1;
@@ -23,6 +24,7 @@
   var status = 0;
   var penguinImage = null;
   var width = null;
+  var level = 0;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -140,7 +142,8 @@
 
     var data = [
       "name="+name,
-      "score="+$("#score").text()
+      "score="+$("#score").text(),
+      "level="+level
     ].join("&");
     $.ajax({
       url: baseURI+"/entry",
@@ -188,7 +191,7 @@
             createNext();
           }
         }
-      } else {
+      } else if (img.attr("src") != baseURI+"/images/medichara02_m07.png") {
         $(selectedBall).find("img").trigger("stopRumble");
         img.jrumble({
           speed: 50
@@ -223,6 +226,12 @@
       new TopView().render();
     }));
     initialize();
+
+    $("#content img").remove();
+    $("#score").html("0");
+    createNext();
+    copyNext();
+    createNext();
   }
 
   function initialize() {
@@ -230,10 +239,13 @@
     var img = image_tag(penguinImage+'_Center.png');
     img.css("margin", "5px").css("height", "64px");
     $("#penguin").append(img);
-    $("#content img").remove();
-    $("#score").html("0");
-    createNext();
-    copyNext();
-    createNext();
+  }
+
+  function setLevel(_level) {
+    level = _level;
+    render();
+    var tds = _.shuffle($("#content td:empty"));
+    for (var i = 0; i < level; i++)
+      $(tds[i]).append(image_tag("medichara02_m07.png", {width:"100%", height:"100%"}));
   }
 })(this.self);
