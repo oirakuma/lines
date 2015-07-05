@@ -6,6 +6,10 @@ function button_to(label) {
   return $('<a>'+label+'</a>').addClass("ui-btn").addClass("ui-shadow");
 }
 
+function link_to(label, href) {
+  return button_to(label).attr("href", href).attr("rel", "external");
+}
+
 function url_for(name) {
   return baseURI+"/images/"+name;
 }

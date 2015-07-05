@@ -137,8 +137,10 @@
   }
 
   function entryScore() {
-    var name = prompt("名前を入力するとランキングに参加できます。");
-    if (!name) return;
+    if (!screen_name) {
+      var name = prompt("名前を入力するとランキングに参加できます。");
+      if (!name) return;
+    }
 
     var data = [
       "name="+name,

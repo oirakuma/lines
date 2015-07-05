@@ -8,13 +8,8 @@
 </head>
 <body>
 
-  <div id="contents"></div>
+<div id="contents"></div>
 
-</div>
-
-<script>
-var baseURI = "<%= ENV["RACK_BASE_URI"] %>";
-</script>
 <script src="<%= ENV["RACK_BASE_URI"] %>/vendor/jquery.min.js"></script>
 <script src="<%= ENV["RACK_BASE_URI"] %>/vendor/jquery.mobile-1.4.5.min.js"></script>
 <script src="<%= ENV["RACK_BASE_URI"] %>/vendor/jquery-ui.min.js"></script>
@@ -25,9 +20,10 @@ var baseURI = "<%= ENV["RACK_BASE_URI"] %>";
 <script src="<%= ENV["RACK_BASE_URI"] %>/ruleview.js"></script>
 <script src="<%= ENV["RACK_BASE_URI"] %>/rankingview.js"></script>
 <script src="<%= ENV["RACK_BASE_URI"] %>/topview.js"></script>
-<script src="<%= ENV["RACK_BASE_URI"] %>/lines.js"></script>
 <script src="<%= ENV["RACK_BASE_URI"] %>/linesview.js"></script>
 <script>
+var baseURI = "<%= ENV["RACK_BASE_URI"] %>";
+var screen_name = <%= session[:screen_name].to_json %>;
 $(document).ready(function(){
   var view = new TopView();
   view.render();
