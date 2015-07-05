@@ -187,7 +187,7 @@
             createNext();
           }
         }
-      } else if (img.attr("src") != "images/rock.jpg") {
+      } else if (img.attr("src") != "images/medichara02_m07.png") {
         $(selectedBall).find("img").trigger("stopRumble");
         img.jrumble({
           speed: 50
@@ -230,7 +230,7 @@
     render();
     var tds = $("#content td:empty").sort(function(){return Math.random()-0.5});
     for (var i = 0; i < level; i++)
-      $(tds[i]).append('<img src="images/rock.jpg" style="width:100%; height:100%">');
+      $(tds[i]).append('<img src="images/medichara02_m07.png" style="width:100%; height:100%">');
   }
 })(this.self);
 
