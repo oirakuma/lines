@@ -9,33 +9,28 @@ h1 {
 h1, h2, h3 {
   text-align: center;
 }
-#score {
-  font-size: 28px;
-  top: 5px;
-  right: 5px;
-  position: absolute;
-}
 #content table {
   empty-cells: show;
   background-color: #36393D;
   padding: 5px;
 }
-#one table {
+#contents table {
   empty-cells: show;
   background-color: #36393D;
 }
 
-#one td {
+#contents td {
   text-align: center;
   vertical-align: middle;
   background-color: lightgray;
 }
-#content {
-  text-align: center;
-}
 #next {
   float: left;
+  margin: 5px;
 }
-.break {
-  clear: left;
+#score {
+  font-size: 28px;
+  top: 5px;
+  right: 5px;
+  position: absolute;
 }

@@ -201,6 +201,11 @@
   }
 
   function render() {
+    $("#contents").empty();
+    $("#contents").append('<div id="next"></div>');
+    $("#contents").append('<div id="penguin"></div>');
+    $("#contents").append('<div id="score"></div>');
+    $("#contents").append('<div id="content"></div>');
     var table = $("<table></table>").attr("cellspacing",1);
     for (var i = 0; i < SIZE; i++) {
       var tr = $("<tr></tr>");
@@ -210,6 +215,9 @@
     }
     var center = $("<center></center>");
     $("#content").html(center.append(table));
+    $("#contents").append(button_to('戻る').click(function(){
+      new TopView().render();
+    }));
     initialize();
   }
 
@@ -225,15 +233,3 @@
     createNext();
   }
 })(this.self);
-
-function url_for(name) {
-  return baseURI+"/images/"+name;
-}
-
-function image_tag(name) {
-  return $('<img>').attr("src", url_for(name));
-}
-
-$(document).ready(function(){
-  render();
-});
