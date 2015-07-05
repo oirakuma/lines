@@ -30,7 +30,7 @@ var TopView = Backbone.View.extend({
       new RankingView().render();
     }));
 
-    div.append(link_to('Twitterログイン', "/request_token"));
+    div.append(link_to('Twitterログイン', baseURI+"/request_token"));
 
     this.$el.html(div);
   }
