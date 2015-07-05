@@ -42,7 +42,7 @@
 
     function createBall() {
       var x = ballImages[Math.floor(Math.random()*ballImages.length)];
-      var img = $('<img>').addClass("ball").attr("src", baseURI+"/images/"+x);
+      var img = image_tag(x).addClass("ball");
       return img;
     }
   }
@@ -80,13 +80,13 @@
       var score = parseInt($("#score").text());
       var count = 0;
       setTimeout(function(){
-        $("#penguin img").attr("src", "images/"+penguinImage+"_L-Leg.png");
+        $("#penguin img").attr("src", baseURI+"/images/"+penguinImage+"_L-Leg.png");
       }, 0);
       var timerId = setInterval(function(){
         count++;
         $("#score").text(score+count);
         if (count == n*n) {
-          $("#penguin img").attr("src", "images/"+penguinImage+"_Center.png");
+          $("#penguin img").attr("src", baseURI+"/images/"+penguinImage+"_Center.png");
           clearTimeout(timerId);
         }
       }, 50);
@@ -215,7 +215,7 @@
 
   function initialize() {
     penguinImage = penguinImages[Math.floor(Math.random()*penguinImages.length)];
-    var img = $('<img src="images/'+penguinImage+'_Center.png">');
+    var img = image_tag(penguinImage+'_Center.png');
     img.css("margin", "5px").css("height", "64px");
     $("#penguin").append(img);
     $("#content img").remove();
@@ -225,6 +225,10 @@
     createNext();
   }
 })(this.self);
+
+function image_tag(name) {
+  return $('<img>').attr("src", baseURI+"/images/"+name);
+}
 
 $(document).ready(function(){
   render();
