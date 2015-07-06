@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
+require 'yaml'
 require 'twitter_oauth'
 
 enable :sessions
@@ -32,11 +33,10 @@ post '/entry' do
 end
 
 before do
-  key = "kYNm9tEjTtmQaYwJpLd7AnhZ1"
-  secret = "JdOT7pij0iioTjhaysg1Xa0F6iDxCOHOPS4SrGS1DyCnPl34zx"
+  h = YAML.load(File.read("setting.yml"))["twitter"]
   @twitter = TwitterOAuth::Client.new(
-    :consumer_key => key,
-    :consumer_secret => secret,
+    :consumer_key => h["key"],
+    :consumer_secret => h["secret"],
     :token => session[:access_token],
     :secret => session[:access_token_secret],
   )
