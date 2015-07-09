@@ -26,7 +26,7 @@ function image_tag(name, option) {
 function createBubble(text, option) {
   var div = $('<div>'+text+'</div>');
   div.css("position","absolute");
-  div.css("font-size", "xx-large");
+  div.css("font-size", "large");
   div.css("color", "white");
   div.css("top", option.top);
   div.css("left", option.left);
