@@ -22,3 +22,20 @@ function image_tag(name, option) {
     img.css(p, option[p]);
   return img;
 }
+
+function createBubble(text, option) {
+  var div = $('<div>'+text+'</div>');
+  div.css("position","absolute");
+  div.css("font-size", "x-large");
+  div.css("font-weight", "bold");
+  div.css("color", "#FF7400");
+  div.css("top", option.top);
+  div.css("left", option.left);
+  div.addClass("animated").addClass("bounce");
+  div.on({
+    "animationend": function() {
+      $(this).remove();
+    },
+  });
+  return div;
+}

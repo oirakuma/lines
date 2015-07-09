@@ -73,14 +73,30 @@
     }
 
     function eraseLine(x, y, vx, vy, n) {
+      var positions = [];
       for (var k = 0; k < n; k++) {
         if (cache[(x+k*vx)*SIZE+(y+k*vy)]) return;
         cache[(x+k*vx)*SIZE+(y+k*vy)] = true;
         var img = $(tds[(x+k*vx)*SIZE+(y+k*vy)]).find("img");
+        positions.push(img.position());
         img.effect("puff", null, function(){
           $(this).remove();
         });
       }
+
+      var tops = 0;
+      var lefts = 0;
+      positions.map(function(pos){
+        tops += pos.top;
+        lefts += pos.left;
+      });
+
+      var bubble = createBubble(n*n, {
+        top: tops/positions.length,
+        left: lefts/positions.length
+      });
+      $("#contents").append(bubble);
+
       var score = parseInt($("#score").text());
       var count = 0;
       setTimeout(function(){
