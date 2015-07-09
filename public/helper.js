@@ -35,6 +35,9 @@ function createBubble(text, option) {
     "animationend": function() {
       $(this).remove();
     },
+    "webkitAnimationEnd": function() {
+      $(this).remove();
+    }
   });
   return div;
 }
