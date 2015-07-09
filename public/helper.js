@@ -26,9 +26,8 @@ function image_tag(name, option) {
 function createBubble(text, option) {
   var div = $('<div>'+text+'</div>');
   div.css("position","absolute");
-  div.css("font-size", "x-large");
-  div.css("font-weight", "bold");
-  div.css("color", "#FF7400");
+  div.css("font-size", "xx-large");
+  div.css("color", "white");
   div.css("top", option.top);
   div.css("left", option.left);
   div.addClass("animated").addClass("bounce");
