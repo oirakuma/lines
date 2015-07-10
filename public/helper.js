@@ -41,3 +41,15 @@ function createBubble(text, option) {
   });
   return div;
 }
+
+function countup(el, from, to, callback) {
+  var count = from;
+  var timerId = setInterval(function(){
+    count++;
+    $(el).text(count);
+    if (count == to) {
+      callback();
+      clearTimeout(timerId);
+    }
+  }, 50);
+}

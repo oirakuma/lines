@@ -2,7 +2,8 @@
 (function(global){
   global.render = render;
   global.initialize = initialize;
-  global.setLevel = setLevel;
+  global.setNormalMode = setNormalMode;
+  global.setSurvivalMode = setSurvivalMode;
 
   var SIZE = 9;
   var GAMEOVER = -1;
@@ -14,6 +15,7 @@
     "gem05.svg",
     "gem06.svg",
     "gem07.svg",
+    "medichara02_m07.png",
   ];
   var penguinImages = [
     "Rockhopper01",
@@ -24,7 +26,9 @@
   var status = 0;
   var penguinImage = null;
   var width = null;
-  var level = 0;
+  var mode = null;
+  var ballCount = null;
+  var score = null;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -44,7 +48,7 @@
     $("#next").html(table);
 
     function createBall() {
-      var x = ballImages[Math.floor(Math.random()*ballImages.length)];
+      var x = ballImages[Math.floor(Math.random()*ballCount)];
       var img = image_tag(x).addClass("ball");
       img.css("width", width-2).css("height", width-2);
       return img;
@@ -54,22 +58,23 @@
   function checkLines() {
     var tds = $("#content td");
 
-    function isLined(x, y, vx, vy) {
+    //指定した座標から指定した方向のLineの長さを数える
+    function countLine(x, y, vx, vy) {
       var img = $(tds[x*SIZE+y]).find("img");
-      if (img.length == 0) return false;
+      if (img.length == 0) return 0;
       var src1 = img.attr("src")
-      var k = 1;
+      var count = 1;
       while (true) {
-        var x2 = x+k*vx;
-        var y2 = y+k*vy;
+        var x2 = x+count*vx;
+        var y2 = y+count*vy;
         if (x2 < 0 || x2 >= SIZE || y2 < 0 || y2 >= SIZE) break;
         img = $(tds[x2*SIZE+y2]).find("img");
         if (img.length == 0) break;
         var src2 = img.attr("src");
         if (src1 != src2) break;
-        k++;
+        count++;
       }
-      return k;
+      return count;
     }
 
     function eraseLine(x, y, vx, vy, n) {
@@ -91,25 +96,29 @@
         lefts += pos.left;
       });
 
-      var bubble = createBubble(n*n, {
-        top: tops/positions.length,
-        left: lefts/positions.length
-      });
-      $("#contents").append(bubble);
+      if (mode == "normal") {
+        var bubble = createBubble(n*n, {
+          top: tops/positions.length,
+          left: lefts/positions.length
+        });
+        $("#contents").append(bubble);
 
-      var score = parseInt($("#score").text());
-      var count = 0;
-      setTimeout(function(){
-        $("#penguin img").attr("src", url_for(penguinImage+"_L-Leg.png"));
-      }, 0);
-      var timerId = setInterval(function(){
-        count++;
-        $("#score").text(score+count);
-        if (count == n*n) {
+        var score = parseInt($("#score").text());
+
+        setTimeout(function(){
+          $("#penguin img").attr("src", url_for(penguinImage+"_L-Leg.png"));
+        }, 0);
+        countup("#score", score, score+n*n, function(){
           $("#penguin img").attr("src", url_for(penguinImage+"_Center.png"));
-          clearTimeout(timerId);
-        }
-      }, 50);
+        });
+      }
+    }
+
+    function eachDirection(f) {
+      var vx = [1, 0, 1,  1];
+      var vy = [0, 1, 1, -1];
+      for (var i = 0; i < vx.length; i++)
+        f(vx[i], vy[i]);
     }
 
     cache = {};
@@ -117,14 +126,12 @@
     var n;
     for (var i = 0; i < SIZE; i++) {
       for (var j = 0; j < SIZE; j++) {
-        var vx = [1, 0, 1,  1];
-        var vy = [0, 1, 1, -1];
-        for (var k = 0; k < vx.length; k++) {
-          if ((n = isLined(i, j,  vx[k], vy[k])) >= 5) {
+        eachDirection(function(vx, vy){
+          if ((n = countLine(i, j,  vx, vy)) >= 5) {
             erased = true;
-            eraseLine(i, j,  vx[k], vy[k], n);
+            eraseLine(i, j,  vx, vy, n);
           }
-        }
+        });
       }
     }
     return erased;
@@ -161,7 +168,7 @@
     var data = [
       "name="+name,
       "score="+$("#score").text(),
-      "level="+level
+      "mode="+mode
     ].join("&");
     $.ajax({
       url: baseURI+"/entry",
@@ -181,6 +188,14 @@
     $("#content").append(button);
   }
 
+  function isGameOver() {
+    if (mode == "normal") {
+      return ($("#content td:empty").length == 0);
+    } else {
+      return score == 0;
+    }
+  }
+
   function createTd(x, y) {
     var td = $('<td></td>').addClass("x"+x+"-"+y).click(function(){
       var img = $(this).find("img");
@@ -193,6 +208,10 @@
 
           cache = {};
           if (!canMove(x1, y1, x2, y2, 0)) return;
+          if (mode == "survival") {
+            score--;
+            $("#score").text(score);
+          }
           $(selectedBall).find("img").trigger("stopRumble");
           $(this).append($(selectedBall).find("img"));
           selectedBall = null;
@@ -200,13 +219,13 @@
           if (!erased) {
             copyNext();
             checkLines();
-            if ($("#content td:empty").length == 0) {
-              status = GAMEOVER;
-              $("#content").append($('<h3>GameOver</h3>'));
-              showRetryButton();
-              setTimeout(entryScore, 500);
-            }
             createNext();
+          }
+          if (isGameOver()) {
+            status = GAMEOVER;
+            $("#content").append($('<h3>GameOver</h3>'));
+            showRetryButton();
+            setTimeout(entryScore, 100);
           }
         }
       } else if (img.attr("src") != baseURI+"/images/medichara02_m07.png") {
@@ -246,7 +265,7 @@
     initialize();
 
     $("#content img").remove();
-    $("#score").html("0");
+    $("#score").html(score);
     createNext();
     copyNext();
     createNext();
@@ -259,11 +278,21 @@
     $("#penguin").append(img);
   }
 
-  function setLevel(_level) {
-    level = _level;
+  function setNormalMode() {
+    ballCount = 7;
+    score = 0;
+    mode = "normal";
     render();
-    var tds = _.shuffle($("#content td:empty"));
-    for (var i = 0; i < level; i++)
-      $(tds[i]).append(image_tag("medichara02_m07.png", {width:"100%", height:"100%"}));
+  }
+
+  function setSurvivalMode() {
+    ballCount = 8;
+    score = 60;
+    mode = "survival";
+    render();
+    for (var i = 0; i < 0; i++) {
+      copyNext();
+      createNext();
+    }
   }
 })(this.self);
