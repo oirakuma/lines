@@ -5,8 +5,8 @@ var RankingView = Backbone.View.extend({
     $.getJSON(baseURI+"/ranking", function(rankings){
       var div = $('<div></div>');
       div.append('<h2>ランキング</h2>');
-      [0,1,2].map(function(level){
-        div.append('<h3>Level'+level+'</h3>');
+      [0,1].map(function(level){
+        div.append('<h3>レベル'+level+'</h3>');
         var ol = $('<ol data-role="listview">');
         rankings[level].map(function(r){
           ol.append(li(self.link_to_twitter(r[0], r[0]+'<span class="ui-li-count">'+r[1]+'</span>')));

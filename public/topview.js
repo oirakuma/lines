@@ -10,12 +10,12 @@ var TopView = Backbone.View.extend({
       center.append(image_tag("gem0"+i+".svg", {width:40}));
     div.append(center);
 
-    div.append(button_to('ノーマルモード').click(function(){
-      setNormalMode();
+    div.append(button_to('レベル0 スタート').click(function(){
+      setEasyMode();
     }));
 
-    div.append(button_to('サバイバルモード').click(function(){
-      setSurvivalMode();
+    div.append(button_to('レベル1 スタート').click(function(){
+      setHardMode();
     }));
 
     div.append(button_to('ルール').click(function(){

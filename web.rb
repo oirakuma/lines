@@ -18,10 +18,9 @@ get '/ranking' do
     h[level.to_i] << [name, score.to_i]
   }
   h.each{|k,v|
-    h[k] = v.sort_by{|name,score|score}.reverse[0,10]
+    h[k] = v.sort_by{|name,score|score}.reverse[0,20]
   }
   h[1] ||= []
-  h[2] ||= []
   h.to_json
 end
 

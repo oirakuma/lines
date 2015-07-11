@@ -8,7 +8,7 @@ var RuleView = Backbone.View.extend({
     ol.append(li('宝石で道がふさがっているとその先には移動できない。'));
     ol.append(li('移動する度に3個の宝石がランダムに追加される。'));
     ol.append(li('全部埋まるとゲーム終了。'));
-    ol.append(li('レベル1以上はウィルス（障害物）が登場します。'));
+    ol.append(li('レベル1はウィルス（障害物）が登場します。'));
     div.append(ol);
     div.append(button_to('OK').click(function(){
       new TopView().render();

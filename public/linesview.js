@@ -2,12 +2,19 @@
 (function(global){
   global.render = render;
   global.initialize = initialize;
-  global.setNormalMode = setNormalMode;
-  global.setSurvivalMode = setSurvivalMode;
+  global.setEasyMode = setEasyMode;
+  global.setHardMode = setHardMode;
 
   var SIZE = 9;
   var GAMEOVER = -1;
   var ballImages= [
+    "gem01.svg",
+    "gem02.svg",
+    "gem03.svg",
+    "gem04.svg",
+    "gem05.svg",
+    "gem06.svg",
+    "gem07.svg",
     "gem01.svg",
     "gem02.svg",
     "gem03.svg",
@@ -29,6 +36,7 @@
   var mode = null;
   var ballCount = null;
   var score = null;
+  var level = null;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -96,22 +104,20 @@
         lefts += pos.left;
       });
 
-      if (mode == "normal") {
-        var bubble = createBubble(n*n, {
-          top: tops/positions.length,
-          left: lefts/positions.length
-        });
-        $("#contents").append(bubble);
+      var bubble = createBubble(n*n, {
+        top: tops/positions.length,
+        left: lefts/positions.length
+      });
+      $("#contents").append(bubble);
 
-        var score = parseInt($("#score").text());
+      var score = parseInt($("#score").text());
 
-        setTimeout(function(){
-          $("#penguin img").attr("src", url_for(penguinImage+"_L-Leg.png"));
-        }, 0);
-        countup("#score", score, score+n*n, function(){
-          $("#penguin img").attr("src", url_for(penguinImage+"_Center.png"));
-        });
-      }
+      setTimeout(function(){
+        $("#penguin img").attr("src", url_for(penguinImage+"_L-Leg.png"));
+      }, 0);
+      countup("#score", score, score+n*n, function(){
+        $("#penguin img").attr("src", url_for(penguinImage+"_Center.png"));
+      });
     }
 
     function eachDirection(f) {
@@ -123,10 +129,10 @@
 
     cache = {};
     var erased = false;
-    var n;
     for (var i = 0; i < SIZE; i++) {
       for (var j = 0; j < SIZE; j++) {
         eachDirection(function(vx, vy){
+          var n;
           if ((n = countLine(i, j,  vx, vy)) >= 5) {
             erased = true;
             eraseLine(i, j,  vx, vy, n);
@@ -168,7 +174,7 @@
     var data = [
       "name="+name,
       "score="+$("#score").text(),
-      "mode="+mode
+      "level="+level
     ].join("&");
     $.ajax({
       url: baseURI+"/entry",
@@ -189,11 +195,7 @@
   }
 
   function isGameOver() {
-    if (mode == "normal") {
-      return ($("#content td:empty").length == 0);
-    } else {
-      return score == 0;
-    }
+    return ($("#content td:empty").length == 0);
   }
 
   function createTd(x, y) {
@@ -208,10 +210,6 @@
 
           cache = {};
           if (!canMove(x1, y1, x2, y2, 0)) return;
-          if (mode == "survival") {
-            score--;
-            $("#score").text(score);
-          }
           $(selectedBall).find("img").trigger("stopRumble");
           $(this).append($(selectedBall).find("img"));
           selectedBall = null;
@@ -276,23 +274,18 @@
     var img = image_tag(penguinImage+'_Center.png');
     img.css("margin", "5px").css("height", "64px");
     $("#penguin").append(img);
-  }
-
-  function setNormalMode() {
-    ballCount = 7;
     score = 0;
-    mode = "normal";
+  }
+
+  function setEasyMode() {
+    ballCount = 14;
+    level = 0;
     render();
   }
 
-  function setSurvivalMode() {
-    ballCount = 8;
-    score = 60;
-    mode = "survival";
+  function setHardMode() {
+    ballCount = 15;
+    level = 1;
     render();
-    for (var i = 0; i < 0; i++) {
-      copyNext();
-      createNext();
-    }
   }
 })(this.self);
