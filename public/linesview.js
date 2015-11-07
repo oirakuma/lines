@@ -58,7 +58,7 @@
     function createBall() {
       var x = ballImages[Math.floor(Math.random()*ballCount)];
       var img = image_tag(x).addClass("ball");
-      img.css("width", width-2).css("height", width-2);
+      img.css("width", width-0).css("height", width-0);
       return img;
     }
   }
@@ -106,7 +106,8 @@
 
       var bubble = createBubble(n*n, {
         top: tops/positions.length,
-        left: lefts/positions.length
+        left: lefts/positions.length,
+        "font-size": width*0.7
       });
       $("#contents").append(bubble);
 
@@ -240,7 +241,7 @@
 
   function render() {
     var windowWidth = Math.min($(window).width(), $(window).height());
-    width = Math.floor((windowWidth-20)/SIZE)-2;
+    width = Math.floor((windowWidth-20)/SIZE);
 
     $("#contents").empty();
     $("#contents").append('<div id="next"></div>');
@@ -270,10 +271,10 @@
   }
 
   function initialize() {
-    penguinImage = penguinImages[Math.floor(Math.random()*penguinImages.length)];
-    var img = image_tag(penguinImage+'_Center.png');
-    img.css("margin", "5px").css("height", "64px");
-    $("#penguin").append(img);
+//    penguinImage = penguinImages[Math.floor(Math.random()*penguinImages.length)];
+//    var img = image_tag(penguinImage+'_Center.png');
+//    img.css("margin", "5px").css("height", "64px");
+//    $("#penguin").append(img);
     score = 0;
   }
 
