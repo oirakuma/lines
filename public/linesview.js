@@ -106,7 +106,7 @@
         lefts += pos.left;
       });
 
-      var bubble = createBubble(25*Math.pow(2, n-5)*chain), {
+      var bubble = createBubble(25*Math.pow(2, n-5)*chain, {
         top: tops/positions.length,
         left: lefts/positions.length,
         "font-size": width*0.7
