@@ -37,6 +37,7 @@
   var ballCount = null;
   var score = null;
   var level = null;
+  var chain = 0;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -64,6 +65,7 @@
   }
 
   function checkLines() {
+    chain++;
     var tds = $("#content td");
 
     //指定した座標から指定した方向のLineの長さを数える
@@ -104,7 +106,7 @@
         lefts += pos.left;
       });
 
-      var bubble = createBubble(n*n, {
+      var bubble = createBubble(25*Math.pow(2, n-5)*chain), {
         top: tops/positions.length,
         left: lefts/positions.length,
         "font-size": width*0.7
