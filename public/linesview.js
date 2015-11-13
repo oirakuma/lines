@@ -213,6 +213,7 @@
 
           cache = {};
           if (!canMove(x1, y1, x2, y2, 0)) return;
+          chain = 0;
           $(selectedBall).find("img").trigger("stopRumble");
           $(this).append($(selectedBall).find("img"));
           selectedBall = null;
