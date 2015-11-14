@@ -37,7 +37,6 @@
   var ballCount = null;
   var score = null;
   var level = null;
-  var chain = 0;
 
   function copyNext() {
     var count = Math.min(3, $("#content td:empty").length);
@@ -65,7 +64,6 @@
   }
 
   function checkLines() {
-    chain++;
     var tds = $("#content td");
 
     //指定した座標から指定した方向のLineの長さを数える
@@ -106,7 +104,7 @@
         lefts += pos.left;
       });
 
-      var bubble = createBubble(25*Math.pow(2, n-5)*chain, {
+      var bubble = createBubble(n*n, {
         top: tops/positions.length,
         left: lefts/positions.length,
         "font-size": width*0.7
@@ -213,7 +211,6 @@
 
           cache = {};
           if (!canMove(x1, y1, x2, y2, 0)) return;
-          chain = 0;
           $(selectedBall).find("img").trigger("stopRumble");
           $(this).append($(selectedBall).find("img"));
           selectedBall = null;
